@@ -7,10 +7,7 @@ constexpr float prezzoBoscaiola = 9.99;
 constexpr float prezzoDiavola = 11.99;
 constexpr float prezzoCrostino = 12.99;
 
-class PizzaNonValida{
-
-};
-
+class PizzaNonValida{};
 
 enum class Tipo{
     bianca, rossa
@@ -31,6 +28,7 @@ class Pizza{
     Tipo getTipo()const {return tipo;}
     float getPrezzo()const {return prezzo;}
 
+    Pizza(){};
     Pizza (Nome n, Tipo t) : nome{n}, tipo {t}{
         switch (nome){
             case Nome::margherita :{
@@ -127,5 +125,49 @@ class Pizza{
     }
 
 };
+
+ostream& operator<<(ostream& out, Nome nome){
+    switch (nome){
+        case Nome::margherita :{
+            out << "Margherita";
+            break;
+        }
+        case Nome::boscaiola :{
+            out << "Boscaiola";
+            break;
+        }
+        case Nome::diavola :{
+            out << "Diavola";
+            break;
+        }
+        case Nome::crostino :{
+            out << "Crostino";
+            break;
+        }
+    };
+    return out;
+}
+
+ostream& operator<<(ostream& out, Tipo tipo){
+    switch(tipo){
+        case Tipo::bianca :{
+            out << "Bianca";
+            break;
+        }
+        case Tipo::rossa :{
+            out << "Rossa";
+            break;
+        }
+    }
+    return out;
+}
+
+ostream& operator<<(ostream& out, Pizza p){
+    out << "Nome: " << p.getNome()
+     <<"\nTipo: " << p.getTipo()
+     << "\nPrezzo: " << p.getPrezzo() << " Euro" << endl;
+
+     return out;
+}
 
 #endif
