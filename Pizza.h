@@ -7,7 +7,12 @@ constexpr float prezzoBoscaiola = 9.99;
 constexpr float prezzoDiavola = 11.99;
 constexpr float prezzoCrostino = 12.99;
 
-class PizzaNonValida{};
+class PizzaNonValida{
+    public:
+    string msg;
+    PizzaNonValida(){};
+    PizzaNonValida(string n_msg) : msg(n_msg){};
+};
 
 enum class Tipo{
     bianca, rossa
@@ -34,7 +39,7 @@ class Pizza{
             case Nome::margherita :{
                 prezzo = prezzoMargherita;
                 if(t == Tipo::bianca){
-                    throw PizzaNonValida{};
+                    throw PizzaNonValida{"Margherita non puo essere bainca"};
                 }
                 break;
             }
@@ -45,14 +50,14 @@ class Pizza{
             case Nome::diavola :{
                 prezzo = prezzoDiavola;
                 if(t == Tipo::bianca){
-                    throw PizzaNonValida{};
+                    throw PizzaNonValida{"Diavola non puo essere bianca"};
                 }
                 break;
             }
             case Nome::crostino :{
                 prezzo = prezzoCrostino;
                 if(t == Tipo::rossa){
-                    throw PizzaNonValida{};
+                    throw PizzaNonValida{"Crosino non puo essere rosso"};
                 }
                 break;
             }
@@ -113,13 +118,15 @@ class Pizza{
         switch (tipo){
             case Tipo::rossa :{
                 if(nome == Nome::crostino){
-                    throw PizzaNonValida();    
+                    throw PizzaNonValida("Crostino non puo essere rosso");    
                 }
+                break;
             }
             case Tipo::bianca :{
                 if(nome == Nome::margherita || nome == Nome::diavola){
-                    throw PizzaNonValida();
+                    throw PizzaNonValida("Margherita o diavola non possono essere bianche");
                 }
+                break;
             }
         }
     }

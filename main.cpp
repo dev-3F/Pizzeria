@@ -12,7 +12,7 @@ int main(){
     // cout << cerlini.getNome() << " " <<  cerlini.getTipo() << " " << cerlini.getPrezzo() << endl;
     //cout << russo << endl;
 
-    int nOrdine = 0;
+    int nOrdini = 0;
     Pizza ordine[100];
 
     char choice;
@@ -24,6 +24,7 @@ int main(){
         cin >> choice;
         switch(choice){
             case '1':{
+                int quantita = 1;
                 cout << "Tipi di pizze disponibili:" << endl
                 << "1. " << Nome::boscaiola << endl
                 << "2. " << Nome::crostino << endl
@@ -31,34 +32,91 @@ int main(){
                 << "4. " << Nome::margherita << endl
                 << "5. Torna Indietro" << endl;
                 cin >> choice;
-                switch(choice){
-                    case '1':{
-                        ordine[nOrdine].setNome(Nome::boscaiola);
-                        cout << "Selezionate il tipo: " << endl
-                             << "1. " << Tipo::bianca << endl
-                             << "2. " << Tipo::rossa << endl;
-                        cin >> choice;
-                        switch(choice){
+                try{
+                    switch(choice){
+                        case '1':{
+                            int tipo;
+                            ordine[nOrdini].setNome(Nome::boscaiola);
+                            cout << "Selezionate il tipo: " << endl
+                                    << "1. " << Tipo::bianca << endl
+                                    << "2. " << Tipo::rossa << endl;
+                            cin >> choice;
+                            switch (choice){
                             case '1':{
-                                ordine[nOrdine].setTipo(Tipo::bianca);
+                                tipo = 1;
                                 break;
                             }
                             case '2':{
-                                ordine[nOrdine].setTipo(Tipo::rossa);
+                                tipo = 2;
                                 break;
                             }
+                            }
+                            cout << "Quantita? ";
+                            cin >> quantita;
+                            for(int i = 0; i < quantita; ++i){
+                                if(tipo == 1){
+                                    ordine[nOrdini].setTipo(Tipo::bianca);
+                                }else {
+                                    ordine[nOrdini].setTipo(Tipo::rossa);
+                                }
+                                ++nOrdini;
+                            }
+                            break;
                         }
-                        ++nOrdine;
+                        case '2':{
+                            cout << "Quantita? ";
+                            cin >> quantita;
+                            for(int i = 0; i < quantita; ++i){
+                                ordine[nOrdini].setNome(Nome::crostino);
+                                ordine[nOrdini].setTipo(Tipo::bianca);
+                                ++nOrdini;
+                            }
+                            break;
+                        }
+                        case '3':{
+                            cout << "Quantita? ";
+                            cin >> quantita;
+                            for(int i = 0; i < quantita; ++i){
+                                ordine[nOrdini].setNome(Nome::diavola);
+                                ordine[nOrdini].setTipo(Tipo::rossa);
+                                ++nOrdini;
+                            }
+                            break;
+                        }
+                        case '4':{
+                            cout << "Quantita? ";
+                            cin >> quantita;
+                            for(int i = 0; i < quantita; ++i){
+                                ordine[nOrdini].setNome(Nome::margherita);
+                                ordine[nOrdini].setTipo(Tipo::rossa);
+                                ++nOrdini;
+                            }
+                            break;
+                        }
                     }
-                    case '2':{
-                        ordine[nOrdine].setNome(Nome::crostino);
-                        ordine[nOrdine].setTipo(Tipo::bianca);
-                        break;
-                    }
-                    }
+                }catch(PizzaNonValida(err)){
+                    cout << err.msg << endl;
                 }
+                break;
             }
+            case '2':{
+                float conto = 0;
+                for(int i = 0; i < nOrdini; ++i){
+                    conto += ordine[i].getPrezzo();
+                }
+                cout << "Il conto e' di: " << conto << " Euro" << endl;
+                break;
+            }
+        case 'q':{
+            cout << "Arrivederci!" << endl;
+            return 0;
+            break;
+        }
+        default :{
+            cout << "Numero non valido" << endl;
+        }
         }
     }
 
+    return 0;
 }
